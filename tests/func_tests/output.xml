@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.12.9 on win32)" generated="2025-03-27T16:25:54.132870" rpa="false" schemaversion="5">
+<suite id="s1" name="Suits" source="D:\Проект\tests\func_tests\suits">
+<suite id="s1-s1" name="Admin Tests" source="D:\Проект\tests\func_tests\suits\admin_tests.robot">
+<test id="s1-s1-t1" name="Удаление пользователя админом" line="6">
+<kw name="Получить токен">
+<msg time="2025-03-27T16:25:54.525069" level="FAIL">No keyword with name 'Получить токен' found.</msg>
+<var>${admin_token}</var>
+<arg>${ADMIN_USER}</arg>
+<arg>${ADMIN_PASS}</arg>
+<status status="FAIL" start="2025-03-27T16:25:54.525069" elapsed="0.000000">No keyword with name 'Получить токен' found.</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${admin_token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-03-27T16:25:54.525069" elapsed="0.000000"/>
+</kw>
+<kw name="DELETE" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>${BASE_URL}/admin/delete/testuser</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a DELETE request.</doc>
+<status status="NOT RUN" start="2025-03-27T16:25:54.525069" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2025-03-27T16:25:54.526068" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-03-27T16:25:54.522237" elapsed="0.003831">No keyword with name 'Получить токен' found.</status>
+</test>
+<status status="FAIL" start="2025-03-27T16:25:54.161877" elapsed="0.365192"/>
+</suite>
+<suite id="s1-s2" name="Auth Tests" source="D:\Проект\tests\func_tests\suits\auth_tests.robot">
+<test id="s1-s2-t1" name="Reg new user" line="7">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.532069" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.532069" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.532069" level="INFO">${body} = {'username': 'usermuser', 'password': 'usermuser', 'confirmPassword': 'usermuser'}</msg>
+<var>${body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<arg>confirmPassword=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.532069" elapsed="0.000000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.542213" level="INFO">POST Request : url=http://localhost:8081/register 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '82'} 
+ body=b'{"username": "usermuser", "password": "usermuser", "confirmPassword": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.542213" level="INFO">POST Response : url=http://localhost:8081/register 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"message":"Пользователь успешно зарегистрирован!"} 
+ </msg>
+<msg time="2025-03-27T16:25:54.543213" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/register</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.532069" elapsed="0.011144"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.544213" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.543213" elapsed="0.001000"/>
+</kw>
+<kw name="Teardown">
+<kw name="Delete user" owner="keywords">
+<kw name="Get connection" owner="keywords">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.545213" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-03-27T16:25:54.545213" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-03-27T16:25:54.552215" level="INFO">Connect to DB using : psycopg2.connect(database='AIS', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.545213" elapsed="0.041034"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.545213" elapsed="0.041034"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.586247" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM users WHERE user_login = 'usermuser'&lt;/code&gt;</msg>
+<msg time="2025-03-27T16:25:54.589246" level="INFO">Commit the transaction</msg>
+<msg time="2025-03-27T16:25:54.589731" level="INFO">${output} = None</msg>
+<var>${output}</var>
+<arg>DELETE FROM users WHERE user_login = '${username}'</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.586247" elapsed="0.003484"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.589731" elapsed="0.000000"/>
+</kw>
+<arg>${username}</arg>
+<status status="PASS" start="2025-03-27T16:25:54.544213" elapsed="0.045518"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.544213" elapsed="0.045518"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.531070" elapsed="0.058661"/>
+</test>
+<test id="s1-s2-t2" name="Failed reg user again" line="16">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.590733" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.590733" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.591733" level="INFO">${body} = {'username': 'usermuser', 'password': 'usermuser', 'confirmPassword': 'usermuser'}</msg>
+<var>${body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<arg>confirmPassword=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.591733" elapsed="0.000000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.597734" level="INFO">POST Request : url=http://localhost:8081/register 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '82'} 
+ body=b'{"username": "usermuser", "password": "usermuser", "confirmPassword": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.597734" level="INFO">POST Response : url=http://localhost:8081/register 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"message":"Пользователь успешно зарегистрирован!"} 
+ </msg>
+<msg time="2025-03-27T16:25:54.597734" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/register</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.591733" elapsed="0.006001"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.597734" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.597734" elapsed="0.000000"/>
+</kw>
+<kw name="Run Keyword And Ignore Error" owner="BuiltIn">
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.602735" level="INFO">POST Request : url=http://localhost:8081/register 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '82'} 
+ body=b'{"username": "usermuser", "password": "usermuser", "confirmPassword": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.602735" level="INFO">POST Response : url=http://localhost:8081/register 
+ status=500, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/plain;charset=UTF-8', 'Content-Length': '42', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Connection': 'close'} 
+ body=Ошибка при регистрации 
+ </msg>
+<msg time="2025-03-27T16:25:54.602735" level="FAIL">HTTPError: 500 Server Error:  for url: http://localhost:8081/register</msg>
+<arg>${BASE_URL}/register</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="FAIL" start="2025-03-27T16:25:54.598735" elapsed="0.005001">HTTPError: 500 Server Error:  for url: http://localhost:8081/register</status>
+</kw>
+<msg time="2025-03-27T16:25:54.604736" level="INFO">${ignored_response} = ('FAIL', 'HTTPError: 500 Server Error:  for url: http://localhost:8081/register')</msg>
+<var>${ignored_response}</var>
+<arg>POST</arg>
+<arg>${BASE_URL}/register</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.598735" elapsed="0.006001"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${ignored_response[0]}</arg>
+<arg>FAIL</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.604736" elapsed="0.001000"/>
+</kw>
+<kw name="Teardown">
+<kw name="Delete user" owner="keywords">
+<kw name="Get connection" owner="keywords">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.606737" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-03-27T16:25:54.606737" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-03-27T16:25:54.606737" level="INFO">Connect to DB using : psycopg2.connect(database='AIS', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.605736" elapsed="0.033008"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.605736" elapsed="0.033008"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.638744" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM users WHERE user_login = 'usermuser'&lt;/code&gt;</msg>
+<msg time="2025-03-27T16:25:54.640745" level="INFO">Commit the transaction</msg>
+<msg time="2025-03-27T16:25:54.641745" level="INFO">${output} = None</msg>
+<var>${output}</var>
+<arg>DELETE FROM users WHERE user_login = '${username}'</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.638744" elapsed="0.003001"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.641745" elapsed="0.000000"/>
+</kw>
+<arg>${username}</arg>
+<status status="PASS" start="2025-03-27T16:25:54.605736" elapsed="0.036009"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.605736" elapsed="0.036009"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.590733" elapsed="0.051012"/>
+</test>
+<test id="s1-s2-t3" name="Login user" line="28">
+<kw name="Setup user">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.643744" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.643744" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.643744" level="INFO">${body} = {'username': 'usermuser', 'password': 'usermuser', 'confirmPassword': 'usermuser'}</msg>
+<var>${body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<arg>confirmPassword=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.643744" elapsed="0.000000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.649746" level="INFO">POST Request : url=http://localhost:8081/register 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '82'} 
+ body=b'{"username": "usermuser", "password": "usermuser", "confirmPassword": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.649746" level="INFO">POST Response : url=http://localhost:8081/register 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"message":"Пользователь успешно зарегистрирован!"} 
+ </msg>
+<msg time="2025-03-27T16:25:54.649746" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/register</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.643744" elapsed="0.006002"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.650747" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.650747" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.643744" elapsed="0.007003"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.650747" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.650747" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.651747" level="INFO">${body} = {'username': 'usermuser', 'password': 'usermuser'}</msg>
+<var>${body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.651747" elapsed="0.000000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.659749" level="INFO">POST Request : url=http://localhost:8081/login (redirected) 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '50'} 
+ body=b'{"username": "usermuser", "password": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.659749" level="INFO">GET Response : url=http://localhost:8081/login?error 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/html;charset=UTF-8', 'Content-Language': 'ru-RU', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Login&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/login.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="login-container"&gt;
+        &lt;h2&gt;Вход&lt;/h2&gt;
+        &lt;form action="/login" method="post"&gt;
+            &lt;div class="input-group"&gt;
+                &lt;label for="username"&gt;Логин &lt;/label&gt;
+                &lt;input type="text" id="username" name="username" required&gt;
+            &lt;/div&gt;
+            &lt;div class="input-group"&gt;
+                &lt;label for="password"&gt;Пароль&lt;/label&gt;
+                &lt;input type="password" id="password" name="password" required&gt;
+            &lt;/div&gt;
+            &lt;button type="submit"&gt;Войти&lt;/button&gt;
+            &lt;div class="error"&gt;Invalid username or password&lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+ </msg>
+<msg time="2025-03-27T16:25:54.659749" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/login</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.651747" elapsed="0.008002"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.659749" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.659749" elapsed="0.001000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.664749" level="INFO">POST Request : url=http://localhost:8081/logout (redirected) 
+ path_url=/logout 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '50'} 
+ body=b'{"username": "usermuser", "password": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.664749" level="INFO">GET Response : url=http://localhost:8081/ 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/html;charset=UTF-8', 'Content-Language': 'ru-RU', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Библиотека&lt;/title&gt;
+    &lt;style&gt; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background-color: #2c3e50;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-tab {
+            padding: 0.5rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover {
+            color: white;
+            background-color: #34495e;
+        }
+
+        .nav-tab.active {
+            color: white;
+            background-color: #3498db;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        p {
+            color: #333;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header class="header"&gt;
+        &lt;h1&gt;Библиотека&lt;/h1&gt;
+        &lt;nav class="nav-tabs"&gt;
+            &lt;a href="/login" class="nav-tab"&gt;Войти&lt;/a&gt;
+            &lt;a href="/register" class="nav-tab"&gt;Зарегистрироваться&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;div class="container"&gt;
+            &lt;section class="welcome"&gt;
+                &lt;h2&gt;Добро пожаловать в нашу библиотеку!&lt;/h2&gt;
+                &lt;p&gt;Здесь вы можете найти самые интересные книги и зарегистрироваться для получения доступа ко всему каталогу.&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/div&gt;
+    &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+ 
+ </msg>
+<msg time="2025-03-27T16:25:54.665750" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/logout</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.660749" elapsed="0.005001"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.665750" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.665750" elapsed="0.000000"/>
+</kw>
+<kw name="Teardown">
+<kw name="Delete user" owner="keywords">
+<kw name="Get connection" owner="keywords">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.666750" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-03-27T16:25:54.666750" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-03-27T16:25:54.666750" level="INFO">Connect to DB using : psycopg2.connect(database='AIS', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.666750" elapsed="0.137634"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.666750" elapsed="0.137634"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.804384" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM users WHERE user_login = 'usermuser'&lt;/code&gt;</msg>
+<msg time="2025-03-27T16:25:54.806384" level="INFO">Commit the transaction</msg>
+<msg time="2025-03-27T16:25:54.807385" level="INFO">${output} = None</msg>
+<var>${output}</var>
+<arg>DELETE FROM users WHERE user_login = '${username}'</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.804384" elapsed="0.003001"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.807385" elapsed="0.000000"/>
+</kw>
+<arg>${username}</arg>
+<status status="PASS" start="2025-03-27T16:25:54.666750" elapsed="0.140635"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.666750" elapsed="0.140635"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.642744" elapsed="0.164641"/>
+</test>
+<test id="s1-s2-t4" name="Failed login user with wrong password" line="42">
+<kw name="Setup user">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.809384" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.809384" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.809384" level="INFO">${body} = {'username': 'usermuser', 'password': 'usermuser', 'confirmPassword': 'usermuser'}</msg>
+<var>${body}</var>
+<arg>username=${username}</arg>
+<arg>password=${password}</arg>
+<arg>confirmPassword=${password}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.809384" elapsed="0.000000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.815505" level="INFO">POST Request : url=http://localhost:8081/register 
+ path_url=/register 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '82'} 
+ body=b'{"username": "usermuser", "password": "usermuser", "confirmPassword": "usermuser"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.815505" level="INFO">POST Response : url=http://localhost:8081/register 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"message":"Пользователь успешно зарегистрирован!"} 
+ </msg>
+<msg time="2025-03-27T16:25:54.815505" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/register</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.809384" elapsed="0.006121"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.816505" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.816505" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.809384" elapsed="0.007121"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.816505" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.816505" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.817505" level="INFO">${body} = {'username': 'usermuser', 'password': 'wrongpassword'}</msg>
+<var>${body}</var>
+<arg>username=${username}</arg>
+<arg>password=${wrongpassword}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.816505" elapsed="0.001000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.823507" level="INFO">POST Request : url=http://localhost:8081/login (redirected) 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '54'} 
+ body=b'{"username": "usermuser", "password": "wrongpassword"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.823507" level="INFO">GET Response : url=http://localhost:8081/login?error 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/html;charset=UTF-8', 'Content-Language': 'ru-RU', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Login&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/login.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="login-container"&gt;
+        &lt;h2&gt;Вход&lt;/h2&gt;
+        &lt;form action="/login" method="post"&gt;
+            &lt;div class="input-group"&gt;
+                &lt;label for="username"&gt;Логин &lt;/label&gt;
+                &lt;input type="text" id="username" name="username" required&gt;
+            &lt;/div&gt;
+            &lt;div class="input-group"&gt;
+                &lt;label for="password"&gt;Пароль&lt;/label&gt;
+                &lt;input type="password" id="password" name="password" required&gt;
+            &lt;/div&gt;
+            &lt;button type="submit"&gt;Войти&lt;/button&gt;
+            &lt;div class="error"&gt;Invalid username or password&lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+ </msg>
+<msg time="2025-03-27T16:25:54.823507" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/login</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.817505" elapsed="0.006002"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.824507" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.824507" elapsed="0.000000"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response.url}</arg>
+<arg>/login?error</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.824507" elapsed="0.001000"/>
+</kw>
+<kw name="Teardown">
+<kw name="Delete user" owner="keywords">
+<kw name="Get connection" owner="keywords">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.826507" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-03-27T16:25:54.826507" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-03-27T16:25:54.826507" level="INFO">Connect to DB using : psycopg2.connect(database='AIS', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.825507" elapsed="0.033008"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.825507" elapsed="0.033008"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.858515" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM users WHERE user_login = 'usermuser'&lt;/code&gt;</msg>
+<msg time="2025-03-27T16:25:54.861516" level="INFO">Commit the transaction</msg>
+<msg time="2025-03-27T16:25:54.861516" level="INFO">${output} = None</msg>
+<var>${output}</var>
+<arg>DELETE FROM users WHERE user_login = '${username}'</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.858515" elapsed="0.003001"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.861516" elapsed="0.000000"/>
+</kw>
+<arg>${username}</arg>
+<status status="PASS" start="2025-03-27T16:25:54.825507" elapsed="0.037008"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.825507" elapsed="0.037008"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.808384" elapsed="0.054131"/>
+</test>
+<test id="s1-s2-t5" name="Failed login with unexistent user" line="54">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.863517" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.863517" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.864516" level="INFO">${body} = {'username': 'wrongusername', 'password': 'wrongpassword'}</msg>
+<var>${body}</var>
+<arg>username=${wrongusername}</arg>
+<arg>password=${wrongpassword}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.864516" elapsed="0.000000"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2025-03-27T16:25:54.872517" level="INFO">POST Request : url=http://localhost:8081/login (redirected) 
+ path_url=/login 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '58'} 
+ body=b'{"username": "wrongusername", "password": "wrongpassword"}' 
+ </msg>
+<msg time="2025-03-27T16:25:54.872517" level="INFO">GET Response : url=http://localhost:8081/login?error 
+ status=200, reason= 
+ headers={'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '0', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'text/html;charset=UTF-8', 'Content-Language': 'ru-RU', 'Transfer-Encoding': 'chunked', 'Date': 'Thu, 27 Mar 2025 13:25:54 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Login&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/login.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class="login-container"&gt;
+        &lt;h2&gt;Вход&lt;/h2&gt;
+        &lt;form action="/login" method="post"&gt;
+            &lt;div class="input-group"&gt;
+                &lt;label for="username"&gt;Логин &lt;/label&gt;
+                &lt;input type="text" id="username" name="username" required&gt;
+            &lt;/div&gt;
+            &lt;div class="input-group"&gt;
+                &lt;label for="password"&gt;Пароль&lt;/label&gt;
+                &lt;input type="password" id="password" name="password" required&gt;
+            &lt;/div&gt;
+            &lt;button type="submit"&gt;Войти&lt;/button&gt;
+            &lt;div class="error"&gt;Invalid username or password&lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+ </msg>
+<msg time="2025-03-27T16:25:54.872517" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>${BASE_URL}/login</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.864516" elapsed="0.008001"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<msg time="2025-03-27T16:25:54.873519" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.872517" elapsed="0.001002"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${response.url}</arg>
+<arg>/login?error</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.873519" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.863517" elapsed="0.010002"/>
+</test>
+<kw name="Teardown" type="TEARDOWN">
+<kw name="Delete user" owner="keywords">
+<kw name="Get connection" owner="keywords">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.875518" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-03-27T16:25:54.875518" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-03-27T16:25:54.875518" level="INFO">Connect to DB using : psycopg2.connect(database='AIS', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.875518" elapsed="0.033753"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.875518" elapsed="0.033753"/>
+</kw>
+<kw name="Execute Sql String" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.909271" level="INFO" html="true">Executing sql:&lt;br&gt;&lt;code style="font-weight: bold;"&gt;DELETE FROM users WHERE user_login = 'usermuser'&lt;/code&gt;</msg>
+<msg time="2025-03-27T16:25:54.911271" level="INFO">Commit the transaction</msg>
+<msg time="2025-03-27T16:25:54.911271" level="INFO">${output} = None</msg>
+<var>${output}</var>
+<arg>DELETE FROM users WHERE user_login = '${username}'</arg>
+<doc>Executes the ``sql_string`` as a single SQL command.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.909271" elapsed="0.002000"/>
+</kw>
+<kw name="Disconnect From Database" owner="DatabaseLibrary">
+<doc>Disconnects from the database.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.911271" elapsed="0.000000"/>
+</kw>
+<arg>${username}</arg>
+<status status="PASS" start="2025-03-27T16:25:54.874518" elapsed="0.036753"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.874518" elapsed="0.036753"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.528068" elapsed="0.383203"/>
+</suite>
+<suite id="s1-s3" name="User Tests" source="D:\Проект\tests\func_tests\suits\user_tests.robot">
+<test id="s1-s3-t1" name="Получение данных пользователя" line="6">
+<kw name="Get connection" owner="keywords">
+<kw name="Connect To Database" owner="DatabaseLibrary">
+<msg time="2025-03-27T16:25:54.918272" level="INFO">Looking for configuration file: 'resources\db.cfg'</msg>
+<msg time="2025-03-27T16:25:54.918272" level="INFO">Configuration file doesn't exist</msg>
+<msg time="2025-03-27T16:25:54.919273" level="INFO">Connect to DB using : psycopg2.connect(database='AIS', user='postgres', password=***, host='localhost', port=5432)</msg>
+<arg>psycopg2</arg>
+<arg>${DB_NAME}</arg>
+<arg>${DB_USER}</arg>
+<arg>${DB_PASSWORD}</arg>
+<arg>${DB_HOST}</arg>
+<arg>${DB_PORT}</arg>
+<doc>Creates a database connection using the DB API 2.0 ``db_module`` and the parameters provided.
+Along with listed commonly used arguments (`db_name`, `db_host` etc.)
+you can set any other DB module specific parameters as key/value pairs.</doc>
+<status status="PASS" start="2025-03-27T16:25:54.918272" elapsed="0.033007"/>
+</kw>
+<status status="PASS" start="2025-03-27T16:25:54.917272" elapsed="0.034007"/>
+</kw>
+<kw name="Получить токен">
+<msg time="2025-03-27T16:25:54.952280" level="FAIL">No keyword with name 'Получить токен' found.</msg>
+<var>${token}</var>
+<arg>testuser</arg>
+<arg>testpass</arg>
+<status status="FAIL" start="2025-03-27T16:25:54.952280" elapsed="0.000000">No keyword with name 'Получить токен' found.</status>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<var>${headers}</var>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" start="2025-03-27T16:25:54.952280" elapsed="0.000000"/>
+</kw>
+<kw name="GET" owner="RequestsLibrary">
+<var>${response}</var>
+<arg>${BASE_URL}/user/info</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request.</doc>
+<status status="NOT RUN" start="2025-03-27T16:25:54.952280" elapsed="0.000000"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${response.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="NOT RUN" start="2025-03-27T16:25:54.952280" elapsed="0.000000"/>
+</kw>
+<status status="FAIL" start="2025-03-27T16:25:54.916272" elapsed="0.036008">No keyword with name 'Получить токен' found.</status>
+</test>
+<status status="FAIL" start="2025-03-27T16:25:54.913272" elapsed="0.041008"/>
+</suite>
+<status status="FAIL" start="2025-03-27T16:25:54.133870" elapsed="0.821410"/>
+</suite>
+<statistics>
+<total>
+<stat pass="5" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Suits" id="s1" pass="5" fail="2" skip="0">Suits</stat>
+<stat name="Admin Tests" id="s1-s1" pass="0" fail="1" skip="0">Suits.Admin Tests</stat>
+<stat name="Auth Tests" id="s1-s2" pass="5" fail="0" skip="0">Suits.Auth Tests</stat>
+<stat name="User Tests" id="s1-s3" pass="0" fail="1" skip="0">Suits.User Tests</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-03-27T16:25:54.165877" level="WARN">Error in file 'D:\Проект\tests\func_tests\resources\keywords.robot' on line 19: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+</errors>
+</robot>
