@@ -1,4 +1,4 @@
-Тесты написаны для данного проекта:
+Тесты написаны для системы автоматизации библиотечного архива: https://github.com/Kilka0s0Tomatami/AutomaticInformationSystemLibrary2
 
 # **Требования и тест-кейсы**
 
