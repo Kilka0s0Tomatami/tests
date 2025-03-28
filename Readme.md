@@ -1,6 +1,6 @@
 Тесты написаны для системы автоматизации библиотечного архива: https://github.com/Kilka0s0Tomatami/AutomaticInformationSystemLibrary2
 
-Видео работы: https://www.youtube.com/watch?v=bQBFLgVioQc
+Видео работы сервиса: https://www.youtube.com/watch?v=bQBFLgVioQc
 
 # **Требования и тест-кейсы**
 
